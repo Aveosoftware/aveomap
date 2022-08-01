@@ -1,0 +1,25 @@
+name: aveomaps
+description: A new Flutter package project.
+version: 0.0.1
+homepage: null
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  cached_network_image: ^3.2.1
+  custom_info_window: ^1.0.1
+  flutter:
+    sdk: flutter
+  flutter_google_places: ^0.3.0
+  geocoding: ^2.0.4
+  geolocator: ^9.0.1
+  get: ^4.6.5
+  google_maps_flutter: ^2.1.9
+  map_launcher: ^2.2.3
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+flutter: null
