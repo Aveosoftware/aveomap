@@ -15,7 +15,8 @@ import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:map_launcher/map_launcher.dart' as mapLaunch;
 
-part 'src/aveomap.dart';
-part 'src/map_controller.dart';
-part 'src/marker_model.dart';
-part 'src/repo.dart';
+part 'src/widget/aveomap_widget.dart';
+part 'src/controller/map_controller.dart';
+part 'src/model/marker_model.dart';
+part 'src/repository/repo.dart';
+part 'src/widget/triangle_clipper.dart';

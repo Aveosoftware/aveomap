@@ -1,4 +1,4 @@
-part of '../aveomaps.dart';
+part of '../../aveomap.dart';
 
 class AveoMarker {
   /// position is [LatLng] of marker's location

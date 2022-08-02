@@ -1,17 +1,18 @@
-part of '../aveomaps.dart';
+part of '../../aveomap.dart';
 
-Future<List> getJson(String json) async {
+Future<List> decodeJson(String json) async {
   List data = jsonDecode(json);
   data.isEmpty ? AssertionError('Invalid json') : null;
   return data;
 }
 
+///this will convert json data to the List of AveoMarkers
 Future<List<AveoMarker>> parsePositionData(String json) async {
-  List<AveoMarker> temp = [];
-  List data = await getJson(json);
+  List<AveoMarker> markerList = [];
+  List data = await decodeJson(json);
   try {
     for (var element in data) {
-      temp.add(
+      markerList.add(
         AveoMarker(
           position: LatLng(
               double.parse(element['lat']), double.parse(element['long'])),
@@ -37,5 +38,5 @@ Future<List<AveoMarker>> parsePositionData(String json) async {
     throw AssertionError('Invalid json');
   }
 
-  return temp;
+  return markerList;
 }
