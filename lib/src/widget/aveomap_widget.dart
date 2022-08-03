@@ -102,6 +102,12 @@ class AveoMap extends StatefulWidget {
   ///backround color of info Container.
   BoxDecoration? infoDecoration;
 
+  ///Height of infoWindow
+  double? infoWindowHieght;
+
+  ///Width of infoWindow
+  double? infoWindowwidth;
+
   ///google maps api key is required for using this package.
   ///For Android :
   ///
@@ -117,6 +123,8 @@ class AveoMap extends StatefulWidget {
   AveoMap({
     Key? key,
     this.infoTextStyle,
+    this.infoWindowHieght,
+    this.infoWindowwidth,
     this.initialCameraPosition,
     this.markerList,
     this.infoDecoration,
@@ -143,6 +151,8 @@ class _AveoMapState extends State<AveoMap> {
 
     widget.markerList != null
         ? controller.addMarker(
+            infoHeight: widget.infoWindowHieght,
+            infoWidth: widget.infoWindowwidth,
             infoDecoration: widget.infoDecoration,
             infoTextStyle: widget.infoTextStyle,
             aveoMarkerList: widget.markerList,
@@ -200,8 +210,8 @@ class _AveoMapState extends State<AveoMap> {
                                                   zoom: widget.zoom)),
                                   Obx(
                                     () => Visibility(
-                                      visible: Platform.isIOS &&
-                                          controller.markerTapped.value &&
+                                      visible: controller.markerTapped.value &&
+                                          Platform.isIOS &&
                                           widget.mapToolbarEnable,
                                       child: Positioned(
                                         bottom: 20,
@@ -260,8 +270,8 @@ class _AveoMapState extends State<AveoMap> {
                                   CustomInfoWindow(
                                     controller:
                                         controller.customInfoWindowController,
-                                    height: 82,
-                                    width: 300,
+                                    height: widget.infoWindowHieght ?? 82,
+                                    width: widget.infoWindowwidth ?? 300,
                                     offset: 50,
                                   )
                                 ],

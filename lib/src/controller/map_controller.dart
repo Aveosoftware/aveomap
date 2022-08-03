@@ -46,6 +46,8 @@ class MapController extends GetxController {
 
   addMarker(
       {String? json,
+      double? infoHeight,
+      double? infoWidth,
       List<AveoMarker>? aveoMarkerList,
       Function(AveoMarker)? infoTap,
       BoxDecoration? infoDecoration,
@@ -83,10 +85,12 @@ class MapController extends GetxController {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                         ),
-                    width: double.infinity,
-                    height: 70,
+                    width: infoWidth ?? double.infinity,
+                    height: infoHeight != null ? infoHeight - 12 : 70,
                     child: Center(
                       child: ListTile(
+                        horizontalTitleGap: 8,
+                        isThreeLine: true,
                         onTap: () => infoTap?.call(element),
                         leading: ConstrainedBox(
                             constraints: const BoxConstraints(
