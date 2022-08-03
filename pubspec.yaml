@@ -22,4 +22,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-flutter: null
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/apple_map.png

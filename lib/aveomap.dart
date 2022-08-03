@@ -1,4 +1,4 @@
-library aveomaps;
+library aveomap;
 
 import 'dart:convert';
 import 'dart:io';

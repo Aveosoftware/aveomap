@@ -126,7 +126,7 @@ class AveoMap extends StatefulWidget {
     this.infoTap,
     this.zoom = 0.0,
     this.myLocationButtonEnabled = true,
-    this.myLocationEnabled = false,
+    this.myLocationEnabled = true,
   });
 
   @override
@@ -198,51 +198,61 @@ class _AveoMapState extends State<AveoMap> {
                                               CameraPosition(
                                                   target: snapshot.data!,
                                                   zoom: widget.zoom)),
-                                  Visibility(
-                                    visible: Platform.isIOS &&
-                                        controller.markerTapped.value &&
-                                        widget.mapToolbarEnable,
-                                    child: Positioned(
-                                      bottom: 20,
-                                      right: 65,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          mapLaunch.MapLauncher.showDirections(
-                                              mapType: mapLaunch.MapType.apple,
-                                              destination: mapLaunch.Coords(
-                                                  controller.markerPosition
-                                                      .value.latitude,
-                                                  controller.markerPosition
-                                                      .value.longitude));
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              height: 38,
-                                              width: 38,
-                                              color: Colors.white70,
-                                              child: const Icon(
-                                                Icons.directions,
-                                                color: Colors.blue,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 1,
-                                              // child: Con,
-                                            ),
-                                            Container(
+                                  Obx(
+                                    () => Visibility(
+                                      visible: Platform.isIOS &&
+                                          controller.markerTapped.value &&
+                                          widget.mapToolbarEnable,
+                                      child: Positioned(
+                                        bottom: 20,
+                                        right: 80,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            mapLaunch.MapLauncher
+                                                .showDirections(
+                                                    mapType:
+                                                        mapLaunch.MapType.apple,
+                                                    destination:
+                                                        mapLaunch.Coords(
+                                                            controller
+                                                                .markerPosition
+                                                                .value
+                                                                .latitude,
+                                                            controller
+                                                                .markerPosition
+                                                                .value
+                                                                .longitude));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Container(
                                                 height: 38,
                                                 width: 38,
                                                 color: Colors.white70,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 8,
-                                                        horizontal: 8),
-                                                child: Image.asset(
-                                                  'assets/icons/apple_map.png',
-                                                  // scale: 0.5,
-                                                )),
-                                          ],
+                                                child: const Icon(
+                                                  Icons.directions,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 1,
+                                                // child: Con,
+                                              ),
+                                              Container(
+                                                  height: 38,
+                                                  width: 38,
+                                                  color: Colors.white70,
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 8),
+                                                  child: Image.asset(
+                                                    'assets/apple_map.png',
+                                                    package: 'aveomap',
+                                                    // scale: 0.5,
+                                                  )),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
