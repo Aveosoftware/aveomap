@@ -1,92 +1,161 @@
 # AveoMap
 
+AveoMap helps simplify adding markers on map.
+
+## Getting Started
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+### Android
+1 Set the minSdkVersion in android/app/build.gradle:
+```groovy
+android {
+    defaultConfig {
+        minSdkVersion 20
+    }
+}
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/aveo-mobile-products/aveomap.git
-git branch -M main
-git push -uf origin main
+This means that app will only be available for users that run Android SDK 20 or higher.
+
+2 Specify your API key and give location permission in the application manifest android/app/src/main/AndroidManifest.xml:
+
+```xml
+<manifest ...
+  <application ...
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="YOUR KEY HERE"/>
+    ...
+        
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
-## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/aveo-mobile-products/aveomap/-/settings/integrations)
+### IOS
+To set up, specify your API key in the application delegate ios/Runner/AppDelegate.m:
 
-## Collaborate with your team
+```objectivec
+#include "AppDelegate.h"
+#include "GeneratedPluginRegistrant.h"
+#import "GoogleMaps/GoogleMaps.h"
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+@implementation AppDelegate
 
-## Test and Deploy
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [GMSServices provideAPIKey:@"YOUR KEY HERE"];
+  [GeneratedPluginRegistrant registerWithRegistry:self];
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+@end
+```
+Or in your swift code, specify your API key in the application delegate ios/Runner/AppDelegate.swift:
 
-Use the built-in continuous integration in GitLab.
+```swift
+import UIKit
+import Flutter
+import GoogleMaps
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    GMSServices.provideAPIKey("YOUR KEY HERE")
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+}
+```
+for location permission add `NSLocationWhenInUseUsageDescription` key to your
+   `Info.plist` file. This will automatically prompt the user for permissions
+   when the map tries to turn on the My Location layer
 
-***
+## Sample Usage
+there are two ways to show diffrent markers in this package you can either use JSON(in predefined format) or you can provide `List<AveoMarker>` inside widget.
 
-# Editing this README
+1 with List of aveoMarker
+```dart
+AveoMap(
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              zoom: 11,
+              infoTap: (element) {
+                print(element);
+              },
+              markerList: [
+                AveoMarker(
+                    position: LatLng(23.00, 72.76),
+                    markerIconImage:
+                        'https://cdn-icons-png.flaticon.com/512/3448/3448513.png',
+                    infoLeadingWidget: Icon(Icons.car_rental),
+                    infoTitle: 'Car repiar center',
+                    infoSubTitle: 'repair your car here 1',
+                    infoTralingWidget: Icon(Icons.navigate_next_sharp)),
+                AveoMarker(
+                    position: LatLng(23.00, 72.8596),
+                    markerIconImage:
+                        'https://www.freeiconspng.com/thumbs/restaurant-icon-png/pink-restaurants-icon-19.png',
+                    infoLeadingWidget: Icon(Icons.hotel),
+                    infoTitle: 'Car repiar center 2',
+                    infoSubTitle: 'repair your car here 2',
+                    infoTralingWidget: Icon(Icons.navigate_next_sharp)),
+                AveoMarker(
+                    position: LatLng(23.00, 72.8786),
+                    markerIconImage: '',
+                    infoLeadingWidget: Icon(
+                      Icons.pedal_bike_sharp,
+                    ),
+                    infoTitle: 'Car repiar center 3',
+                    infoSubTitle: 'repair your car here 3',
+                    infoTralingWidget: Icon(Icons.navigate_next_sharp)),
+                AveoMarker(
+                    position: LatLng(23.00, 72.786),
+                    markerIconImage: '',
+                    infoLeadingWidget: Icon(Icons.local_hospital),
+                    infoTitle: 'Car repiar center 4',
+                    infoSubTitle: 'repair your car here 4',
+                    infoTralingWidget: Icon(Icons.navigate_next_sharp)),
+              ],
+            );
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+2 with jsonData,
+formate of json should be stricly as below
 
-## Name
-Choose a self-explaining name for your project.
+```json
+[ {
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+"lat": "latitude",
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+"long": "longitude",
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+"img": "Marker icon",
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+"title":"Title of infowindow",
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+"sub_title":"subTitle of infoWindow",
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+"leading":"leading image url of infoWindow",
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+"traling":"traling image url of infoWindow"
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+}, ...(other markers to be shown as above)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+]
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```dart
+ AveoMap(
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              zoom: 11,
+              infoTap: (element) {
+                print(element);
+              },
+              markerListJson: your JSON,
+            );
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
