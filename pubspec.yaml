@@ -12,7 +12,6 @@ dependencies:
   custom_info_window: ^1.0.1
   flutter:
     sdk: flutter
-  flutter_google_places: ^0.3.0
   geocoding: ^2.0.4
   geolocator: ^9.0.1
   get: ^4.6.5
@@ -23,8 +22,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-dependency_overrides:
-  rxdart: ^0.27.5
   
 flutter:
   uses-material-design: true
