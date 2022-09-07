@@ -2,7 +2,7 @@ part of '../../aveomap.dart';
 
 class AveoMarker {
   /// position is [LatLng] of marker's location
-  LatLng position;
+  MarkerPosition position;
 
   /// if you don't want default red pin marker than you can provide your custom MarkerIcon with ImageUrl
   String markerIconImage;

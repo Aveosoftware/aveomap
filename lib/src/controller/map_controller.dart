@@ -1,7 +1,6 @@
 part of '../../aveomap.dart';
 
 class MapController extends GetxController {
-  final count = 0.obs;
   final markers = <Marker>{};
   RxBool markerTapped = false.obs;
   Rx<LatLng> markerPosition = LatLng(0, 0).obs;
@@ -63,7 +62,8 @@ class MapController extends GetxController {
                 .load('');
         markerIcon = await getBytesFromAsset(imageData, 70);
       }
-      markers.add(Marker(
+      markers.add(
+        Marker(
           icon: element.markerIconImage.isNotEmpty
               ? BitmapDescriptor.fromBytes(
                   markerIcon!,
@@ -123,12 +123,15 @@ class MapController extends GetxController {
                   )
                 ],
               ),
-              element.position,
+              LatLng(element.position.latitude, element.position.longitude),
             );
           },
           markerId: MarkerId(element.position.latitude.toString() +
               element.position.longitude.toString()),
-          position: element.position));
+          position:
+              LatLng(element.position.latitude, element.position.longitude),
+        ),
+      );
     }
 
     update();
