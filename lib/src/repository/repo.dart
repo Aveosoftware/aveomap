@@ -14,7 +14,7 @@ Future<List<AveoMarker>> parsePositionData(String json) async {
     for (var element in data) {
       markerList.add(
         AveoMarker(
-          position: LatLng(
+          position: MarkerPosition(
               double.parse(element['lat']), double.parse(element['long'])),
           markerIconImage: element['img'],
           infoTitle: element['title'],

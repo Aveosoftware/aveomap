@@ -166,131 +166,120 @@ class _AveoMapState extends State<AveoMap> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: controller.locationPermission(),
-        builder: (context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.data != null) {
-            bool permission = snapshot.data!;
-            if (permission) {
-              return Container(
-                  child: FutureBuilder<LatLng>(
-                      future: controller.getUserLocation(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return GetBuilder<MapController>(
-                            builder: (controller) {
-                              return Stack(
-                                children: [
-                                  GoogleMap(
-                                      mapToolbarEnabled:
-                                          widget.mapToolbarEnable,
-                                      mapType: widget.mapType,
-                                      onTap: (argument) {
-                                        controller.markerTapped.value = false;
-                                        controller.customInfoWindowController
-                                            .hideInfoWindow!();
-                                      },
-                                      onMapCreated: (googleController) {
-                                        controller.customInfoWindowController
-                                                .googleMapController =
-                                            googleController;
-                                      },
-                                      onCameraMove: (position) {
-                                        controller.customInfoWindowController
-                                            .onCameraMove!();
-                                      },
-                                      myLocationEnabled:
-                                          widget.myLocationEnabled,
-                                      markers: controller.markers,
-                                      myLocationButtonEnabled:
-                                          widget.myLocationButtonEnabled,
-                                      initialCameraPosition:
-                                          widget.initialCameraPosition ??
-                                              CameraPosition(
-                                                  target: snapshot.data!,
-                                                  zoom: widget.zoom)),
-                                  Obx(
-                                    () => Visibility(
-                                      visible: controller.markerTapped.value &&
-                                          Platform.isIOS &&
-                                          widget.mapToolbarEnable,
-                                      child: Positioned(
-                                        bottom: 20,
-                                        right: 80,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            mapLaunch.MapLauncher
-                                                .showDirections(
-                                                    mapType:
-                                                        mapLaunch.MapType.apple,
-                                                    destination:
-                                                        mapLaunch.Coords(
-                                                            controller
-                                                                .markerPosition
-                                                                .value
-                                                                .latitude,
-                                                            controller
-                                                                .markerPosition
-                                                                .value
-                                                                .longitude));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                height: 38,
-                                                width: 38,
-                                                color: Colors.white70,
-                                                child: const Icon(
-                                                  Icons.directions,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 1,
-                                                // child: Con,
-                                              ),
-                                              Container(
-                                                  height: 38,
-                                                  width: 38,
-                                                  color: Colors.white70,
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      vertical: 8,
-                                                      horizontal: 8),
-                                                  child: Image.asset(
-                                                    'assets/apple_map.png',
-                                                    package: 'aveomap',
-                                                    // scale: 0.5,
-                                                  )),
-                                            ],
-                                          ),
+      future: controller.locationPermission(),
+      builder: (context, AsyncSnapshot<bool> snapshot) {
+        if (snapshot.data != null) {
+          bool permission = snapshot.data!;
+          if (permission) {
+            return FutureBuilder<LatLng>(
+              future: controller.getUserLocation(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return GetBuilder<MapController>(
+                    builder: (controller) {
+                      return Stack(
+                        children: [
+                          GoogleMap(
+                            mapToolbarEnabled: widget.mapToolbarEnable,
+                            mapType: widget.mapType,
+                            onTap: (argument) {
+                              controller.markerTapped.value = false;
+                              controller
+                                  .customInfoWindowController.hideInfoWindow!();
+                            },
+                            onMapCreated: (googleController) {
+                              controller.customInfoWindowController
+                                  .googleMapController = googleController;
+                            },
+                            onCameraMove: (position) {
+                              controller
+                                  .customInfoWindowController.onCameraMove!();
+                            },
+                            myLocationEnabled: widget.myLocationEnabled,
+                            markers: controller.markers,
+                            myLocationButtonEnabled:
+                                widget.myLocationButtonEnabled,
+                            initialCameraPosition:
+                                widget.initialCameraPosition ??
+                                    CameraPosition(
+                                        target: snapshot.data!,
+                                        zoom: widget.zoom),
+                          ),
+                          Obx(
+                            () => Visibility(
+                              visible: controller.markerTapped.value &&
+                                  Platform.isIOS &&
+                                  widget.mapToolbarEnable,
+                              child: Positioned(
+                                bottom: 20,
+                                right: 80,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    map_launch.MapLauncher.showDirections(
+                                      mapType: map_launch.MapType.apple,
+                                      destination: map_launch.Coords(
+                                          controller
+                                              .markerPosition.value.latitude,
+                                          controller
+                                              .markerPosition.value.longitude),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 38,
+                                        width: 38,
+                                        color: Colors.white70,
+                                        child: const Icon(
+                                          Icons.directions,
+                                          color: Colors.blue,
                                         ),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        width: 1,
+                                        // child: Con,
+                                      ),
+                                      Container(
+                                        height: 38,
+                                        width: 38,
+                                        color: Colors.white70,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 8),
+                                        child: Image.asset(
+                                          'assets/apple_map.png',
+                                          package: 'aveomap',
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  CustomInfoWindow(
-                                    controller:
-                                        controller.customInfoWindowController,
-                                    height: widget.infoWindowHieght ?? 82,
-                                    width: widget.infoWindowwidth ?? 300,
-                                    offset: 50,
-                                  )
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      }));
-            } else {
-              return Center(
-                child: Text('Location permission is required'),
-              );
-            }
+                                ),
+                              ),
+                            ),
+                          ),
+                          CustomInfoWindow(
+                            controller: controller.customInfoWindowController,
+                            height: widget.infoWindowHieght ?? 82,
+                            width: widget.infoWindowwidth ?? 300,
+                            offset: 50,
+                          )
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: Text('Location permission is required'),
+            );
           }
-        });
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }
