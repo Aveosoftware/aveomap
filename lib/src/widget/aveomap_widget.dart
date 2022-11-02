@@ -105,6 +105,9 @@ class AveoMap extends StatefulWidget {
   ///Height of infoWindow
   double? infoWindowHieght;
 
+  ///Polylines to be placed on the map.
+  Set<Polyline>? polylines;
+
   ///Width of infoWindow
   double? infoWindowwidth;
 
@@ -128,6 +131,7 @@ class AveoMap extends StatefulWidget {
     this.initialCameraPosition,
     this.markerList,
     this.infoDecoration,
+    this.polylines,
     this.markerListJson,
     this.mapType = MapType.normal,
     this.mapToolbarEnable = true,
@@ -180,6 +184,7 @@ class _AveoMapState extends State<AveoMap> {
                       return Stack(
                         children: [
                           GoogleMap(
+                            polylines: widget.polylines ?? {},
                             mapToolbarEnabled: widget.mapToolbarEnable,
                             mapType: widget.mapType,
                             onTap: (argument) {
