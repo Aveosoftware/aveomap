@@ -74,6 +74,8 @@ for location permission add `NSLocationWhenInUseUsageDescription` key to your
 ## Sample Usage
 there are two ways to show diffrent markers in this package you can either use JSON(in predefined format) or you can provide `List<AveoMarker>` inside widget.
 
+![Screenshot](ss.png)
+
 1 with List of aveoMarker
 ```dart
 AveoMap(
@@ -85,7 +87,7 @@ AveoMap(
               },
               markerList: [
                 AveoMarker(
-                    position: LatLng(23.00, 72.76),
+                    position: MarkerPosition(23.00, 72.76),
                     markerIconImage:
                         'https://cdn-icons-png.flaticon.com/512/3448/3448513.png',
                     infoLeadingWidget: Icon(Icons.car_rental),
@@ -93,7 +95,7 @@ AveoMap(
                     infoSubTitle: 'repair your car here 1',
                     infoTralingWidget: Icon(Icons.navigate_next_sharp)),
                 AveoMarker(
-                    position: LatLng(23.00, 72.8596),
+                    position: MarkerPosition(23.00, 72.8596),
                     markerIconImage:
                         'https://www.freeiconspng.com/thumbs/restaurant-icon-png/pink-restaurants-icon-19.png',
                     infoLeadingWidget: Icon(Icons.hotel),
@@ -101,7 +103,7 @@ AveoMap(
                     infoSubTitle: 'repair your car here 2',
                     infoTralingWidget: Icon(Icons.navigate_next_sharp)),
                 AveoMarker(
-                    position: LatLng(23.00, 72.8786),
+                    position: MarkerPosition(23.00, 72.8786),
                     markerIconImage: '',
                     infoLeadingWidget: Icon(
                       Icons.pedal_bike_sharp,
@@ -110,7 +112,7 @@ AveoMap(
                     infoSubTitle: 'repair your car here 3',
                     infoTralingWidget: Icon(Icons.navigate_next_sharp)),
                 AveoMarker(
-                    position: LatLng(23.00, 72.786),
+                    position: MarkerPosition(23.00, 72.786),
                     markerIconImage: '',
                     infoLeadingWidget: Icon(Icons.local_hospital),
                     infoTitle: 'Car repiar center 4',
