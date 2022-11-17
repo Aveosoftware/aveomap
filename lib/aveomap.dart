@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:ui' as ui;
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:map_launcher/map_launcher.dart' as map_launch;
