@@ -212,8 +212,8 @@ class _AveoMapState extends State<AveoMap> {
                           ),
                           Obx(
                             () => Visibility(
-                              visible: !kIsWeb &&
-                                  controller.markerTapped.value &&
+                              visible: controller.markerTapped.value &&
+                                  !kIsWeb &&
                                   Platform.isIOS &&
                                   widget.mapToolbarEnable,
                               child: Positioned(
