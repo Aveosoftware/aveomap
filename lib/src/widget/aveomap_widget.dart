@@ -148,10 +148,10 @@ class AveoMap extends StatefulWidget {
 class _AveoMapState extends State<AveoMap> {
   @override
   void initState() {
-    if ((widget.markerList == null && widget.markerListJson == null)) {
-      throw AssertionError(
-          'both markerList and markerListJson can not be null');
-    }
+    // if ((widget.markerList == null && widget.markerListJson == null)) {
+    //   throw AssertionError(
+    //       'both markerList and markerListJson can not be null');
+    // }
 
     widget.markerList != null
         ? controller.addMarker(
@@ -161,8 +161,10 @@ class _AveoMapState extends State<AveoMap> {
             infoTextStyle: widget.infoTextStyle,
             aveoMarkerList: widget.markerList,
             infoTap: widget.infoTap)
-        : controller.addMarker(
-            json: widget.markerListJson!, infoTap: widget.infoTap);
+        : widget.markerListJson != null
+            ? controller.addMarker(
+                json: widget.markerListJson!, infoTap: widget.infoTap)
+            : null;
     super.initState();
   }
 
