@@ -5,6 +5,12 @@ AveoMap helps simplify adding markers on map.
 ## Getting Started
 
 
+- [Configration for ANDROID](#android)
+- [Configration for IOS](#ios)
+- [Usage example](#sample-usage)
+- [Where to use](#where-it-can-be-used)
+- [Why to use](#why-to-use)
+
 
 ### Android
 1 Set the minSdkVersion in android/app/build.gradle:
@@ -159,5 +165,16 @@ formate of json should be stricly as below
               markerListJson: your JSON,
             );
 ```
+## Where it can be used?
+
+- Show list of your operating center inside map like locations of your shops,mall,offices, etc.
+- To give information about your location 
+- To show directions of your location 
+
+## Why to use?
+- This plugin simplifies the process of integrating google map inside app.
+- gives meaningful infowindow which if not directly supported by googlemap
+- It brings down hours of integration for google map by 70-80%
+
 
 
