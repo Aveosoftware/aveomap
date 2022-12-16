@@ -2,6 +2,9 @@
 
 AveoMap helps simplify adding markers on map.
 
+## What you Save
+- If you integrate map module with marker and custom floating infowindow from the scratch it can take upto 20-30hrs to make it done. But Wait You have Aveomap Right?? so your time will reduces to only 30-60mins!!!
+
 ## Getting Started
 
 
@@ -173,8 +176,7 @@ formate of json should be stricly as below
 
 ## Why to use?
 - This plugin simplifies the process of integrating google map inside app.
-- gives meaningful infowindow which if not directly supported by googlemap
-- It brings down hours of integration for google map by 70-80%
+- gives meaningful infowindow which if not directly supported by googlemap.
 
 
 
