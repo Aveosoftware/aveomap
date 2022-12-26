@@ -32,6 +32,10 @@ class AveoMap extends StatefulWidget {
   /// This function will be called onTap of infoWindow and will return Tapped marker.
   final Function(AveoMarker)? infoTap;
 
+  /// This function will be called onTap of Marker and will return Tapped marker.
+  /// it Will only triggred if shwoInfoWindow is set to false.
+  final Function(AveoMarker)? onMarkerTap;
+
   /// The zoom level of the camera.
   ///
   /// A zoom of 0.0, the default, means the screen width of the world is 256.
@@ -111,6 +115,9 @@ class AveoMap extends StatefulWidget {
   ///Width of infoWindow
   double? infoWindowwidth;
 
+  ///
+  bool showInfoWindow;
+
   ///google maps api key is required for using this package.
   ///For Android :
   ///
@@ -137,8 +144,10 @@ class AveoMap extends StatefulWidget {
     this.mapToolbarEnable = true,
     this.infoTap,
     this.zoom = 0.0,
+    this.onMarkerTap,
     this.myLocationButtonEnabled = true,
     this.myLocationEnabled = true,
+    this.showInfoWindow = true,
   });
 
   @override
@@ -160,10 +169,14 @@ class _AveoMapState extends State<AveoMap> {
             infoDecoration: widget.infoDecoration,
             infoTextStyle: widget.infoTextStyle,
             aveoMarkerList: widget.markerList,
+            showInfowindow: widget.showInfoWindow,
+            markerTap: widget.onMarkerTap,
             infoTap: widget.infoTap)
         : widget.markerListJson != null
             ? controller.addMarker(
-                json: widget.markerListJson!, infoTap: widget.infoTap)
+                showInfowindow: widget.showInfoWindow,
+                json: widget.markerListJson!,
+                infoTap: widget.infoTap)
             : null;
     super.initState();
   }

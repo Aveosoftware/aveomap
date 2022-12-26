@@ -47,8 +47,10 @@ class MapController extends GetxController {
       {String? json,
       double? infoHeight,
       double? infoWidth,
+      required bool showInfowindow,
       List<AveoMarker>? aveoMarkerList,
       Function(AveoMarker)? infoTap,
+      Function(AveoMarker)? markerTap,
       BoxDecoration? infoDecoration,
       TextStyle? infoTextStyle}) async {
     List<AveoMarker> aveoMarkers =
@@ -70,67 +72,77 @@ class MapController extends GetxController {
                 )
               : BitmapDescriptor.defaultMarker,
           draggable: false,
-          infoWindow:
-              InfoWindow(title: 'Test marker', snippet: 'This is test marker'),
+          infoWindow: kIsWeb
+              ? const InfoWindow(
+                  title: 'Test marker', snippet: 'This is test marker')
+              : InfoWindow.noText,
           onDragStart: (_) => markers.clear(),
-          onTap: () {
-            if (kIsWeb) {
-            } else {
-              markerTapped.value = true;
-              markerPosition.value =
-                  LatLng(element.position.latitude, element.position.longitude);
-              customInfoWindowController.addInfoWindow!(
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      decoration: infoDecoration ??
-                          BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
+          onTap: showInfowindow
+              ? () {
+                  if (kIsWeb) {
+                    null;
+                  } else {
+                    markerTapped.value = true;
+                    markerPosition.value = LatLng(
+                        element.position.latitude, element.position.longitude);
+                    customInfoWindowController.addInfoWindow!(
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: infoDecoration ??
+                                BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                            width: infoWidth ?? double.infinity,
+                            height: infoHeight != null ? infoHeight - 12 : 70,
+                            child: Center(
+                              child: ListTile(
+                                horizontalTitleGap: 8,
+                                isThreeLine: true,
+                                onTap: () => infoTap?.call(element),
+                                leading: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                        maxWidth: 45,
+                                        maxHeight: 45,
+                                        minHeight: 45),
+                                    child: Center(
+                                        child: element.infoLeadingWidget)),
+                                title: Text(
+                                  element.infoTitle,
+                                  style: infoTextStyle,
+                                ),
+                                subtitle: Text(
+                                  element.infoSubTitle,
+                                  style: infoTextStyle,
+                                ),
+                                trailing: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                        maxWidth: 45, maxHeight: 45),
+                                    child: Center(
+                                        child: element.infoTralingWidget)),
+                              ),
+                            ),
                           ),
-                      width: infoWidth ?? double.infinity,
-                      height: infoHeight != null ? infoHeight - 12 : 70,
-                      child: Center(
-                        child: ListTile(
-                          horizontalTitleGap: 8,
-                          isThreeLine: true,
-                          onTap: () => infoTap?.call(element),
-                          leading: ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                  maxWidth: 45, maxHeight: 45, minHeight: 45),
-                              child: Center(child: element.infoLeadingWidget)),
-                          title: Text(
-                            element.infoTitle,
-                            style: infoTextStyle,
-                          ),
-                          subtitle: Text(
-                            element.infoSubTitle,
-                            style: infoTextStyle,
-                          ),
-                          trailing: ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                  maxWidth: 45, maxHeight: 45),
-                              child: Center(child: element.infoTralingWidget)),
-                        ),
+                          ClipPath(
+                            clipper: TriangleClipper(),
+                            child: Container(
+                              color: infoDecoration?.color ??
+                                  infoDecoration?.gradient?.colors.first ??
+                                  Colors.white,
+                              height: 12,
+                              width: 24,
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    ClipPath(
-                      clipper: TriangleClipper(),
-                      child: Container(
-                        color: infoDecoration?.color ??
-                            infoDecoration?.gradient?.colors.first ??
-                            Colors.white,
-                        height: 12,
-                        width: 24,
-                      ),
-                    )
-                  ],
-                ),
-                LatLng(element.position.latitude, element.position.longitude),
-              );
-            }
-          },
+                      LatLng(element.position.latitude,
+                          element.position.longitude),
+                    );
+                  }
+                }
+              : () => infoTap?.call(element),
           markerId: MarkerId(element.position.latitude.toString() +
               element.position.longitude.toString()),
           position:
