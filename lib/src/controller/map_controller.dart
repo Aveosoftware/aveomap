@@ -142,7 +142,7 @@ class MapController extends GetxController {
                     );
                   }
                 }
-              : () => infoTap?.call(element),
+              : () => markerTap?.call(element),
           markerId: MarkerId(element.position.latitude.toString() +
               element.position.longitude.toString()),
           position:
