@@ -33,7 +33,7 @@ class MapController extends GetxController {
   }
 
   //for converting image url to byte which is required for custom marker icon
-  Future<Uint8List> getBytesFromAsset(ByteData byteData, int width) async {
+  Future<Uint8List> getBytesFromNetwork(ByteData byteData, int width) async {
     ui.Codec codec = await ui.instantiateImageCodec(
         byteData.buffer.asUint8List(),
         targetWidth: width);
@@ -62,7 +62,9 @@ class MapController extends GetxController {
         ByteData imageData =
             await NetworkAssetBundle(Uri.parse(element.markerIconImage))
                 .load('');
-        markerIcon = await getBytesFromAsset(imageData, 70);
+        markerIcon = await getBytesFromNetwork(imageData, 70);
+      } else if (element.markerIconAssetPath != null) {
+        markerIcon = element.markerIconAssetPath!;
       }
       markers.add(
         Marker(

@@ -23,3 +23,4 @@ part 'src/model/marker_model.dart';
 part 'src/model/position.dart';
 part 'src/repository/repo.dart';
 part 'src/widget/triangle_clipper.dart';
+part 'src/utils/aveomap_utils.dart';

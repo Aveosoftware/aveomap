@@ -7,6 +7,10 @@ class AveoMarker {
   /// if you don't want default red pin marker than you can provide your custom MarkerIcon with ImageUrl
   String markerIconImage;
 
+  /// for using asset image as markerIcon you need to get Uint8List.
+  ///  which you can get by AveoMapUtils.getBytesFromAsset()
+  Uint8List? markerIconAssetPath;
+
   /// This will be the title  of infowindow to be shown when user taps on a marker.
   String infoTitle;
 
@@ -25,5 +29,6 @@ class AveoMarker {
       this.infoLeadingWidget,
       this.infoTralingWidget,
       this.infoSubTitle = '',
-      this.infoTitle = ''});
+      this.infoTitle = '',
+      this.markerIconAssetPath});
 }
