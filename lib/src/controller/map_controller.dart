@@ -63,12 +63,13 @@ class MapController extends GetxController {
             await NetworkAssetBundle(Uri.parse(element.markerIconImage))
                 .load('');
         markerIcon = await getBytesFromNetwork(imageData, 70);
-      } else if (element.markerIconAssetPath != null) {
-        markerIcon = (await Future.wait([element.markerIconAssetPath!])).first;
+      } else if (element.assetIconFuture != null) {
+        markerIcon = (await Future.wait([element.assetIconFuture!])).first;
       }
       markers.add(
         Marker(
-          icon: element.markerIconImage.isNotEmpty
+          icon: element.markerIconImage.isNotEmpty ||
+                  element.assetIconFuture != null
               ? BitmapDescriptor.fromBytes(
                   markerIcon!,
                 )

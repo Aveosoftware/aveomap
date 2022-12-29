@@ -8,8 +8,8 @@ class AveoMarker {
   String markerIconImage;
 
   /// for using asset image as markerIcon you need to get Uint8List.
-  ///  which you can get by AveoMapUtils.getBytesFromAsset()
-  Future<Uint8List>? markerIconAssetPath;
+  ///  which you can get by AveoMapUtils().getBytesFromAsset()
+  Future<Uint8List>? assetIconFuture;
 
   /// This will be the title  of infowindow to be shown when user taps on a marker.
   String infoTitle;
@@ -30,5 +30,5 @@ class AveoMarker {
       this.infoTralingWidget,
       this.infoSubTitle = '',
       this.infoTitle = '',
-      this.markerIconAssetPath});
+      this.assetIconFuture});
 }
