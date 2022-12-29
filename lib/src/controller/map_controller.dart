@@ -64,7 +64,7 @@ class MapController extends GetxController {
                 .load('');
         markerIcon = await getBytesFromNetwork(imageData, 70);
       } else if (element.markerIconAssetPath != null) {
-        markerIcon = element.markerIconAssetPath!;
+        markerIcon = (await Future.wait([element.markerIconAssetPath!])).first;
       }
       markers.add(
         Marker(
